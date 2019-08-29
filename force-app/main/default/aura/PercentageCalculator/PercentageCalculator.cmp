@@ -1,0 +1,24 @@
+<aura:component>
+    <aura:attribute name="wholnumber" type="integer" access="public" />
+    <aura:attribute name="percentage" type="integer" access="public" />
+    <div class="slds-m-around_small">
+        <!-- <label class="slds-form-element__label" for="text-input-id-1">Enter a number :</label> -->
+        <!-- <div class="slds-form-element__control"> -->
+        <lightning:input type="number" name="input1" label="Enter a date" value="{!v.wholnumber}" />
+        <!-- <input type="number" placeholder="Enter a number" class="slds-input" value="{!v.wholnumber}" /> -->
+        <!-- </div> -->
+        <!-- <label class="slds-form-element__label" for="text-input-id-1">Percentage is :</label> -->
+        <!-- <div class="slds-form-element__control"> -->
+        <!-- <input type="number" placeholder="Enter a Percentage" class="slds-input" value="{!v.percentage}" formatter="per/cent-fixed" /> -->
+        <lightning:input type="number" name="input1" label="Enter a percentage" value="{!v.percentage}" formatter="per/cent-fixed" />
+        <!-- </div> -->
+        <!-- </div>
+    <div class="slds-m-around_small"> -->
+        <br/>
+        <br/>
+
+        <h2>
+            {!v.percentage}% of Number {!v.wholnumber} is {! add(v.wholenumber, v.percentage)}
+        </h2>
+    </div>
+</aura:component>

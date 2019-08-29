@@ -1,0 +1,124 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" controller="EventController" access="global">
+    <ltng:require scripts='/resource/ChinmayaJS'
+                  />
+    <aura:attribute name="newCampaign" type="Campaign"
+                    default="{ 'sobjectType': 'Campaign',
+                             'Name': '',
+                             'StartDate':'',
+                             'EndDate':'',
+                             'Description':'',
+                             }"/>
+    <aura:attribute name="events" type="Campaign"/>
+    <aura:attribute name="aevents" type="Campaign"/>
+    <aura:attribute name="ievents" type="Campaign"/>
+    <aura:attribute name="isModalOpen" type="boolean" default="false"/>
+    <aura:attribute name="eventModalInfo" type="Campaign"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="init" value="{!this}" action="{!c.loadEvents}"/>
+    <aura:handler name="init" value="{!this}" action="{!c.loadActiveEvents}"/>
+    <aura:handler name="init" value="{!this}" action="{!c.loadInactiveEvents}"/>
+    <div class="forceCommunityTileMenu">
+        
+        <div class="slds-scrollable" style="height:500px;">
+            
+            <div class="uiMenuItem forceCommunityTileMenuItem">
+                <div class="tileLabel" >All Events</div>  
+                <lightning:tabset selectedTabId="one">
+                    <lightning:tab label="UPCOMING EVENTS" id="one">
+                        <aura:iteration items="{!v.aevents}" var="e">
+                            
+                                <div class="d2" ><b><u>{!e.Name}</u></b></div>
+                                <table>
+                                    <tr>
+                                        <td style="width:100px;padding-top:10px">
+                                            <div class="d3"><img class="slds-avatar--large" src="{!e.Image_URL__c}" style="height: 8rem;width:5rem;"/></div>
+                                        </td>
+                                        <td style="padding-top:10px">
+                                            <div class="d4" style="padding-left: 10px"><b>Date Of The Event : </b>{!e.StartDate} - {!e.EndDate}</div> 
+                                            <div class="d44" style="padding-left: 10px"><b>Timings : </b><lightning:formattedDateTime value="{!e.Start_Time__c}" hour="numeric"/> <b> To </b>
+                                                														<lightning:formattedDateTime value="{!e.End_Time__c}" hour="numeric"/>
+                                            </div> 
+                             				<div class="d5" style="padding-left: 10px">
+                                    			<div class="d6" Style="height:auto;width:auto"><b>What the event is about : </b>{!e.Description}</div>
+                                                <div class="d66" Style="height:auto;width:auto"><b>Benefits : </b>{!e.Benefits__c}</div>
+                                                <div class="d66" Style="height:auto;width:auto"><b>Address : </b>{!e.Address__c}
+                                                    
+                                                </div>
+                                    			<lightning:button variant="brand" aura:id="{!e.id}" label="Register"/>
+                                                <lightning:button aura:id="{!e.id}" name="{!e.Id}" label="View Content" onclick="{!c.openModel}"/>
+                                               
+                                   			</div>
+                                        </td>
+                                    </tr>
+                            </table>
+                            <hr/>
+                        </aura:iteration>
+                    </lightning:tab>
+                    <lightning:tab label="PAST EVENTS" id="two"> 
+                        <aura:iteration items="{!v.ievents}" var="e">
+                               <div class="d2" ><b><u>{!e.Name}</u></b></div>
+                                <table>
+                                    <tr>
+                                        <td style="width:100px;padding-top:10px">
+                                            <div class="d3"><img class="slds-avatar--large" src="{!e.Image_URL__c}" style="height: 8rem;width:5rem;"/></div>
+                                        </td>
+                                        <td style="padding-top:10px">
+                                            <div class="d4" style="padding-left: 10px"><b>Date Of The Event : </b>{!e.StartDate} - {!e.EndDate}</div> 
+                                            <div class="d44" style="padding-left: 10px"><b>Timings : </b> <lightning:formattedDateTime value="{!e.Start_Time__c}" hour="numeric"/> <b> To </b>
+                                                														<lightning:formattedDateTime value="{!e.End_Time__c}" hour="numeric"/>
+                                            </div> 
+                             				<div class="d5" style="padding-left: 10px">
+                                    			<div class="d6" Style="height:auto;width:auto"><b>What the event is about : </b>{!e.Description}</div>
+                                                <div class="d66" Style="height:auto;width:auto"><b>Benefits : </b>{!e.Benefits__c}</div>
+                                                <div class="d66" Style="height:auto;width:auto"><b>Address : </b>{!e.Address__c}
+                                                    
+                                                </div>
+                                    			<lightning:button variant="brand" aura:id="{!e.id}" label="Register"/>
+                                                <lightning:button aura:id="{!e.id}" name="{!e.Id}" label="View Content" onclick="{!c.openModel}"/>
+                                   			</div>
+                                        </td>
+                                    </tr>
+                            </table>
+                            <hr/>
+                        </aura:iteration>
+                    </lightning:tab>
+                </lightning:tabset>
+            </div>
+        </div>
+    </div>
+    <aura:if isTrue="{!v.isModalOpen}">
+        
+        <!-- Modal/Popup Box starts here-->
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container" style="max-width:65rem;width:auto;">
+                <!-- Modal/Popup Box Header Starts here-->
+                <header class="slds-modal__header" style="background-color: #FFA500; color: white;">
+                    <lightning:buttonIcon iconName="utility:close"
+                                          onclick="{! c.closeModel }"
+                                          alternativeText="close"
+                                          variant="bare-inverse"
+                                          class="slds-modal__close"/>
+                    <h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" >{!v.eventModalInfo.Name}</h1>
+                </header>
+                <!--Modal/Popup Box Body Starts here-->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <!--ui:outputText class="slds-text-heading_medium" value="{!v.eventModalInfo.Description}"/-->
+                    <div>
+                        <!--span class="slds-text-heading_small slds-text-color_error">Start Date: <ui:outputText class="slds-text-heading_medium" value="{!v.eventModalInfo.StartDate}"/></span-->
+                        <br/><!--span class="slds-text-heading_small slds-text-color_error">End Date: <ui:outputText class="slds-text-heading_medium" value="{!v.eventModalInfo.EndDate}"/></span-->
+                    </div>
+                    <img class="slds-avatar--x-large" src="{!v.eventModalInfo.Image_URL__c}" Style="width:100%"/>
+                </div>
+                <!--Modal/Popup Box Footer Starts here-->
+                <footer class="slds-modal__footer">
+                    <lightning:button variant="brand"
+                                      label="Close"
+                                      title="Close"
+                                      onclick="{!c.submitDetails}"/>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+</aura:component>

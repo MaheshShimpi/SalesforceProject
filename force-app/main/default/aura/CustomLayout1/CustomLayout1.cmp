@@ -1,0 +1,26 @@
+<aura:component implements="forceCommunity:layout" access="global" >
+    <aura:attribute name="coloum1" type="Aura.Component[]" />
+    <aura:attribute name="coloum2" type="Aura.Component[]" />
+    <aura:attribute name="coloum3" type="Aura.Component[]" />
+    
+	<div class="demo-only demo-only--sizing slds-grid slds-wrap">
+      <div class="slds-size_1-of-3">
+        <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around_x-small">{!v.coloum1}</div>
+      </div>
+      <div class="slds-size_1-of-3">
+        <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around_x-small">{!v.coloum2}</div>
+      </div>
+      <div class="slds-size_1-of-3">
+        <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around_x-small">{!v.coloum3}</div>
+      </div>
+   <!--   <div class="slds-size_1-of-3">
+        <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around_x-small">{!v.coloum1}</div>
+      </div>
+      <div class="slds-size_2-of-3">
+        <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around_x-small">{!v.coloum1}</div>
+      </div>
+      <div class="slds-size_3-of-3">
+        <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around_x-small">{!v.coloum1}</div>
+      </div> -->
+    </div> 
+</aura:component>

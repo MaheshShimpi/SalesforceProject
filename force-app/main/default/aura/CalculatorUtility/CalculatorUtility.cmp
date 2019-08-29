@@ -1,0 +1,21 @@
+<aura:component>
+    <aura:attribute name="number1" type="Integer" access="private" />
+    <aura:attribute name="number2" type="Integer" access="private" />
+    <aura:attribute name="output" type="Integer" access="private" default="0" />
+    <div class="slds-m-around_small">
+        <lightning:input type="number" name="input1" placeholder="Enter a Number1" value="{!v.number1}" />
+        <lightning:input type="number" name="input1" placeholder="Enter a Number2" value="{!v.number2}" />
+        <!-- <lightning:input type="number" name="input1" placeholder="Enter a Number1" value="{!v.wholnumber}" /> -->
+    </div>
+    <div class="slds-m-around_small">
+        Output is = {!v.output}
+    </div>
+    <div class="slds-m-around_small">
+        <!-- Neutral variant (default) -->
+        <lightning:button label="Add" variant="destructive" onclick="{!c.doAdd}" />
+        <lightning:button label="Sub" variant="destructive" onclick="{!c.doSub}" class="slds-m-left_x-small" />
+        <lightning:button label="Mul" variant="destructive" onclick="{!c.doMul}" class="slds-m-left_x-small" />
+        <lightning:button label="Div" variant="destructive" onclick="{!c.doDiv}" class="slds-m-left_x-small" />
+    </div>
+
+</aura:component>
